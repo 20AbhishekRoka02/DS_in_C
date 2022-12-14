@@ -1,5 +1,3 @@
-// Pending
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,63 +6,6 @@ typedef struct node
     int info;
     struct node *next;
 } node;
-
-// void insertAsc(node **head)
-// {
-//     int data;
-//     printf("Enter data: ");
-//     scanf("%d", &data);
-//     printf("Data\n");
-
-//     node *r;
-//     r = (node *)malloc(sizeof(node));
-//     r->info = data;
-//     printf("node\n");
-
-//     printf("Transfered to old!\n");
-//     if (*head != NULL)
-//     {
-//         node *old = *head;
-//         if (old->info > data)
-//         {
-//             r->next = old;
-//             old = r;
-//             printf("old inserted\n");
-//         }
-//         else if (old != NULL)
-//         {
-
-//             node *new = *head;
-//             new = new->next;
-//             printf("new pointers\n");
-
-//             while (new != NULL)
-//             {
-//                 if (new->info > data)
-//                 {
-//                     break;
-//                 }
-//                 old = new;
-//                 new = new->next;
-//             }
-//             r->next = new;
-//             old->next = r;
-//         }
-//         else
-//         {
-//             r->next = old;
-//             old = r;
-//         }
-//     }
-//     else
-//     {
-
-//         r->info = data;
-//         r->next = *head;
-//         *head = r;
-//         printf("data inserted\n");
-//     }
-// }
 
 void insertAsc(node **head)
 {
@@ -78,25 +19,48 @@ void insertAsc(node **head)
 
     if (*head != NULL)
     {
-        int flag =0;
+        int flag = 0;
         node *old = *head;
+        node *new = (node *)malloc(sizeof(node));
+
+        int move = 0;
         while (old != NULL)
         {
+            new = old->next;
 
-            if (old->info > data)
+            if (new == NULL)
             {
-                r->next = old;
-                old->next = NULL;
-                flag = 1;
-                break;
+                if (old->info > data)
+                {
+                    *head = r;
+                    r->next = old;
+                    break;
+                }
+                else
+                {
+                    old->next = r;
+                    r->next = new;
+                    break;
+                }
             }
-            old = old->next;
-        }
+            else
+            {
+                if (old->info > data)
+                {
+                    r->next = old;
+                    *head = r;
+                    break;
+                }
+                else if (new->info > data)
+                {
+                    r->next = new;
+                    old->next = r;
+                    break;
+                }
 
-        if (flag==0)
-        {
-            old -> next = r;
-            r = old;
+                old = old->next;
+                new = new->next;
+            }
         }
     }
     else
@@ -111,7 +75,6 @@ void deleteBegin(node **head)
     node *temp = *head;
     if (temp != NULL)
     {
-        // temp = temp->next;
         printf("Removed element: %d\n", temp->info);
         *head = temp->next;
     }
@@ -127,7 +90,6 @@ void deleteEnd(node **head)
 
     if (temp != NULL)
     {
-
         if (temp->next == NULL)
         {
             printf("Removed Element: %d\n", temp->info);
@@ -135,7 +97,6 @@ void deleteEnd(node **head)
         }
         else
         {
-
             node *lp;
             while (temp->next != NULL)
             {
