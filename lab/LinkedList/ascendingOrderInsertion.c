@@ -9,60 +9,100 @@ typedef struct node
     struct node *next;
 } node;
 
+// void insertAsc(node **head)
+// {
+//     int data;
+//     printf("Enter data: ");
+//     scanf("%d", &data);
+//     printf("Data\n");
+
+//     node *r;
+//     r = (node *)malloc(sizeof(node));
+//     r->info = data;
+//     printf("node\n");
+
+//     printf("Transfered to old!\n");
+//     if (*head != NULL)
+//     {
+//         node *old = *head;
+//         if (old->info > data)
+//         {
+//             r->next = old;
+//             old = r;
+//             printf("old inserted\n");
+//         }
+//         else if (old != NULL)
+//         {
+
+//             node *new = *head;
+//             new = new->next;
+//             printf("new pointers\n");
+
+//             while (new != NULL)
+//             {
+//                 if (new->info > data)
+//                 {
+//                     break;
+//                 }
+//                 old = new;
+//                 new = new->next;
+//             }
+//             r->next = new;
+//             old->next = r;
+//         }
+//         else
+//         {
+//             r->next = old;
+//             old = r;
+//         }
+//     }
+//     else
+//     {
+
+//         r->info = data;
+//         r->next = *head;
+//         *head = r;
+//         printf("data inserted\n");
+//     }
+// }
+
 void insertAsc(node **head)
 {
     int data;
     printf("Enter data: ");
     scanf("%d", &data);
-    printf("Data\n");
 
-    node *r;
-    r = (node *)malloc(sizeof(node));
+    node *r = (node *)malloc(sizeof(node));
+
     r->info = data;
-    printf("node\n");
 
-    printf("Transfered to old!\n");
     if (*head != NULL)
     {
+        int flag =0;
         node *old = *head;
-        if (old->info > data)
-        {
-            r->next = old;
-            old = r;
-            printf("old inserted\n");
-        }
-        else if (old != NULL)
+        while (old != NULL)
         {
 
-            node *new = *head;
-            new = new->next;
-            printf("new pointers\n");
-
-            while (new != NULL)
+            if (old->info > data)
             {
-                if (new->info > data)
-                {
-                    break;
-                }
-                old = new;
-                new = new->next;
+                r->next = old;
+                old->next = NULL;
+                flag = 1;
+                break;
             }
-            r->next = new;
-            old->next = r;
+            old = old->next;
         }
-        else
+
+        if (flag==0)
         {
-            r->next = old;
-            old = r;
+            old -> next = r;
+            r = old;
         }
     }
     else
     {
-
-        r->info = data;
         r->next = *head;
         *head = r;
-        printf("data inserted\n");
     }
 }
 
